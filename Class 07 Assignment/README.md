@@ -43,7 +43,7 @@ cd app.py
 pip install -r requirements.txt
 ```
 
-##▶️ Usage
+## ▶ Usage
 Run the app locally using:
 ```
 streamlit run app.py
