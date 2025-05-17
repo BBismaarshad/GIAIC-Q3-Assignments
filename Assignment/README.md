@@ -87,25 +87,10 @@ Once a user selects a phone:
 
 ## 🛠️ Installation
 
-1. **Clone the repo**
-
-```
-git clone https://github.com/yourusername/.git
-cd
-```
-
-
 Install dependencies
 ```
 pip install -r requirements.txt
 ```
-
-Run the app
-
-```
-streamlit run main.py
-```
-
 📦 Dependencies
 
 ```
@@ -122,5 +107,6 @@ pip install -r requirements.txt
 
 ✨ Demo
 Live Streamlit sharing link:
+
 📍( https://giaic-q3-assignments-9nt4vw9fkkzp3amstzwsvb.streamlit.app/ )
 
