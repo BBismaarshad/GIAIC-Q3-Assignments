@@ -1,7 +1,6 @@
 # 📱 BuyNCompare
 
-BuyNCompare is an interactive Streamlit web application that helps users compare smartphone prices, features, and trends. It includes a login system, price filtering, market analysis, and even lets users simulate a phone purchase with a mock payment system and PDF bill generation.
-
+BuyNCompare is an interactive Streamlit web application that helps users compare smartphone prices, features, and trends. It includes a login system, price filtering, market analysis, and even lets users simulate a phone purchase with a mock payment system.
 ---
 
 ## 🚀 Features
@@ -31,11 +30,16 @@ BuyNCompare is an interactive Streamlit web application that helps users compare
 ## 🏗️ Project Structure
 
 BuyNCompare/
+
 │
 ├── app.py # Main Streamlit app logic
+
 ├── auth.py # User authentication logic
+
 ├── requirements.txt # Python dependencies
+
 └── README.md # Project overview (you’re here!)
+
 
 
 
