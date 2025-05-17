@@ -1,7 +1,6 @@
 # 📱 BuyNCompare
 
 BuyNCompare is an interactive Streamlit web application that helps users compare smartphone prices, features, and trends. It includes a login system, price filtering, market analysis, and even lets users simulate a phone purchase with a mock payment system.
----
 
 ## 🚀 Features
 
