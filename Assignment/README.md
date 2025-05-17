@@ -31,7 +31,6 @@ BuyNCompare is an interactive Streamlit web application that helps users compare
 
 BuyNCompare/
 
-│
 ├── app.py # Main Streamlit app logic
 
 ├── auth.py # User authentication logic
