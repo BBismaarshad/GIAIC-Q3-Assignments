@@ -102,11 +102,6 @@ plotly
 fpdf
 ```
 
-Install all via:
-```
-pip install -r requirements.txt
-```
-
 ✨ Demo
 Live Streamlit sharing link:
 
