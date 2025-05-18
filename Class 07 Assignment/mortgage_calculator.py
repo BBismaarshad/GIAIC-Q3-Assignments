@@ -2,59 +2,54 @@ import streamlit as st
 import pandas as pd
 import math
 
-st.title("Mortgage Repayments Calculator")
+def calculate_mortgage():
+    st.title("Mortgage Repayments Calculator")
 
-st.write("### Input Data")
-col1, col2 = st.columns(2)
-home_value = col1.number_input("Home Value", min_value=0, value=500000)
-deposit = col1.number_input("Deposit", min_value=0, value=100000)
-interest_rate = col2.number_input("Interest Rate (in %)", min_value=0.0, value=5.5)
-loan_term = col2.number_input("Loan Term (in years)", min_value=1, value=30)
+    st.write("### Input Data")
+    col1, col2 = st.columns(2)
+    home_value = col1.number_input("Home Value", min_value=0, value=500000)
+    deposit = col1.number_input("Deposit", min_value=0, value=100000)
+    interest_rate = col2.number_input("Interest Rate (in %)", min_value=0.0, value=5.5)
+    loan_term = col2.number_input("Loan Term (in years)", min_value=1, value=30)
 
-# Calculate the repayments
-loan_amount = home_value - deposit
-monthly_interest_rate = (interest_rate / 100) / 12
-number_of_payments = loan_term * 12
-monthly_payment = (
-    loan_amount
-    * (monthly_interest_rate * (1 + monthly_interest_rate) ** number_of_payments)
-    / ((1 + monthly_interest_rate) ** number_of_payments - 1)
-)
+    # Calculations
+    loan_amount = home_value - deposit
+    monthly_rate = (interest_rate / 100) / 12
+    months = loan_term * 12
+    
+    if monthly_rate > 0:
+        monthly_payment = (loan_amount * monthly_rate * (1 + monthly_rate)**months) / ((1 + monthly_rate)**months - 1)
+    else:  # Handle 0% interest case
+        monthly_payment = loan_amount / months
 
-# Display the repayments
-total_payments = monthly_payment * number_of_payments
-total_interest = total_payments - loan_amount
+    # Display results
+    st.write("### Repayments")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Monthly Payment", f"${monthly_payment:,.2f}")
+    col2.metric("Total Payments", f"${monthly_payment * months:,.0f}")
+    col3.metric("Total Interest", f"${monthly_payment * months - loan_amount:,.0f}")
 
-st.write("### Repayments")
-col1, col2, col3 = st.columns(3)
-col1.metric(label="Monthly Repayments", value=f"${monthly_payment:,.2f}")
-col2.metric(label="Total Repayments", value=f"${total_payments:,.0f}")
-col3.metric(label="Total Interest", value=f"${total_interest:,.0f}")
+    # Generate amortization schedule
+    balance = loan_amount
+    schedule = []
+    for month in range(1, months + 1):
+        interest = balance * monthly_rate
+        principal = monthly_payment - interest
+        balance -= principal
+        schedule.append({
+            "Month": month,
+            "Payment": monthly_payment,
+            "Principal": principal,
+            "Interest": interest,
+            "Balance": max(balance, 0),  # Prevent negative balance
+            "Year": math.ceil(month / 12)
+        })
 
-# Create payment schedule
-schedule = []
-remaining_balance = loan_amount
+    # Show amortization chart
+    st.write("### Payment Schedule")
+    df = pd.DataFrame(schedule)
+    yearly_balance = df.groupby("Year")["Balance"].min()
+    st.line_chart(yearly_balance)
 
-for i in range(1, number_of_payments + 1):
-    interest_payment = remaining_balance * monthly_interest_rate
-    principal_payment = monthly_payment - interest_payment
-    remaining_balance -= principal_payment
-    year = math.ceil(i / 12)
-    schedule.append([
-        i,
-        monthly_payment,
-        principal_payment,
-        interest_payment,
-        remaining_balance,
-        year,
-    ])
-
-df = pd.DataFrame(
-    schedule,
-    columns=["Month", "Payment", "Principal", "Interest", "Remaining Balance", "Year"],
-)
-
-# Display the chart
-st.write("### Payment Schedule")
-payments_df = df[["Year", "Remaining Balance"]].groupby("Year").min()
-st.line_chart(payments_df)
+if __name__ == "__main__":
+    calculate_mortgage()
